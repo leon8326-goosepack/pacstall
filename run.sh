@@ -17,14 +17,13 @@ for cmd in git gcc make; do
 done
 
 # Define variables
-PACMAN_VERSION="6.0.2" # Adjust this to the desired version
 PACMAN_URL="https://gitlab.archlinux.org/pacman/pacman.git"
 BUILD_DIR="$HOME/pacman-build"
 
-# Install dependencies
-echo "Installing dependencies..."
-sudo apt-get install -y libarchive-dev curl-dev gpgme-dev python3-dev || \
-    error_exit "Failed to install dependencies. Install them manually and rerun the script."
+# Fetch the latest version dynamically
+echo "Fetching the latest version of pacman..."
+LATEST_VERSION=$(git ls-remote --tags "$PACMAN_URL" | awk -F'/' '{print $3}' | sort -V | tail -n 1)
+echo "Latest version is $LATEST_VERSION"
 
 # Clone pacman repository
 echo "Cloning pacman repository..."
@@ -33,9 +32,9 @@ cd "$BUILD_DIR"
 git clone "$PACMAN_URL"
 cd pacman
 
-# Checkout the desired version
-echo "Checking out version $PACMAN_VERSION..."
-git checkout "v$PACMAN_VERSION" || error_exit "Failed to checkout version $PACMAN_VERSION."
+# Checkout the latest version
+echo "Checking out version $LATEST_VERSION..."
+git checkout "v$LATEST_VERSION" || error_exit "Failed to checkout version $LATEST_VERSION."
 
 # Build and install pacman
 echo "Building pacman..."
