@@ -3,4 +3,5 @@ This requires git, make and gcc.
 
 ## Installation
 ### CURL
-bash <(curl -s https://raw.githubusercontent.com/leon8326/pacstall/main/run.sh)
+sudo su -
+bash <(curl -s https://raw.githubusercontent.com/leon8326-goosepack/pacstall/main/run.sh)
